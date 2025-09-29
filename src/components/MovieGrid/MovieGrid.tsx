@@ -1,15 +1,17 @@
 import type { Movie } from '../../types/movie';
 import css from './MovieGrid.module.css';
 import imgPlaceholder from '../../assets/img_placeholder.webp';
+import clsx from 'clsx';
 
 interface MovieGridProps {
   onSelect: (movie: Movie) => void;
   movies: Movie[];
+  isLoading: boolean;
 }
 
-function MovieGrid({ onSelect, movies }: MovieGridProps) {
+function MovieGrid({ onSelect, movies, isLoading }: MovieGridProps) {
   return (
-    <ul className={css.grid}>
+    <ul className={clsx(css.grid, { [css.loading]: isLoading })}>
       {movies.map(movie => (
         <li key={movie.id} onClick={() => onSelect(movie)} className={css.item}>
           <div className={css.card}>

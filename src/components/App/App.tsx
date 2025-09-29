@@ -15,18 +15,11 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
-  const handleSubmit = async (formData: FormData) => {
-    const query = formData.get('query') as string;
-    const serchString = query.trim();
-
-    if (!serchString) {
-      toast.error('Please, enter your search query');
-      return;
-    }
+  const handleSearch = async (query: string) => {
     setIsLoading(true);
     setIsError(false);
     try {
-      const fetchedMovies = await fetchMovies(serchString);
+      const fetchedMovies = await fetchMovies(query);
       setMovies(fetchedMovies);
       if (!fetchedMovies.length) {
         toast.error('No movies found for your request');
@@ -51,9 +44,13 @@ function App() {
   return (
     <div className={styles.app}>
       <Toaster position="top-center" reverseOrder={false} />
-      <SearchBar onSubmit={handleSubmit} />
+      <SearchBar onSubmit={handleSearch} isLoading={isLoading} />
       {!!movies.length && (
-        <MovieGrid movies={movies} onSelect={handleSelectMovie} />
+        <MovieGrid
+          movies={movies}
+          onSelect={handleSelectMovie}
+          isLoading={isLoading}
+        />
       )}
       {isLoading && <Loader />}
       {isError && <ErrorMessage />}
