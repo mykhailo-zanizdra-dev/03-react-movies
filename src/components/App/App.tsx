@@ -6,7 +6,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { useState } from 'react';
 import type { Movie } from '../../types/movie';
 import Loader from '../Loader/Loader';
-import fetchMovies from '../../servises/movieService';
+import fetchMovies from '../../services/movieService';
 import MovieModal from '../MovieModal/MovieModal';
 
 function App() {
